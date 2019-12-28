@@ -2,15 +2,16 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { FIREBASE_CONFIG } from '../../../../config';
+import { FIREBASE_CONFIG, functionsConfig } from '../../../../config';
 import { awsCostConfig } from '../../aws-cost-config';
 
 const firebaseApp = admin.initializeApp(FIREBASE_CONFIG);
 const firestore = firebaseApp.firestore();
 
 // based on: https://firebase.google.com/docs/firestore/solutions/schedule-export
-export const backupFirestoreFunction = functions.pubsub
-  .schedule(awsCostConfig.checkSchedule)
+export const awsCostCheck = functions
+  .region(functionsConfig.defaultRegion)
+  .pubsub.schedule(awsCostConfig.checkSchedule)
   .onRun(async () => {
     try {
       await handler();
