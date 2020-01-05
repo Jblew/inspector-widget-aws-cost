@@ -8,7 +8,9 @@ import { Component, Vue } from 'vue-property-decorator';
 @Component({
   components: {},
 })
-export default class AWSCostMonthToDate extends Vue {}
+export default class AWSCostMonthToDate extends Vue {
+  created() {}
+}
 </script>
 
 <style>
