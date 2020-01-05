@@ -5,27 +5,41 @@ import * as admin from 'firebase-admin';
 import { functionsConfig } from '../../../../config';
 import { awsCostConfig } from '../../aws-cost-config';
 import { AWSCostEntry } from '../../AWSCostEntry';
-import { fetchCosts } from './fetchCosts';
+import { getCredentials } from './getCredentials';
+import { getCostExplorer } from './getCostExplorer';
+import { fetchMonthToDateCosts } from './fetchMonthToDate';
 
 const firebaseApp = admin.initializeApp();
 const firestore = firebaseApp.firestore();
 
-export const awsCostCheck = functions
+export const awsCostCheckMonthToDate = functions
   .region(functionsConfig.defaultRegion)
-  .pubsub.schedule(awsCostConfig.checkSchedule)
+  .pubsub.schedule(awsCostConfig.checkSchedule.monthToDate)
   .onRun(async () => {
     try {
-      await handler();
+      await handler(fetchMonthToDateCosts);
     } catch (err) {
       console.error(err);
       throw err;
     }
   });
 
-async function handler() {
+export const awsCostCheckToday = functions
+  .region(functionsConfig.defaultRegion)
+  .pubsub.schedule(awsCostConfig.checkSchedule.today)
+  .onRun(async () => {
+    try {
+      await handler(fetchMonthToDateCosts);
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  });
+
+async function handler(fetchFn: (costExplorer: AWS.CostExplorer) => Promise<AWSCostEntry>) {
   try {
-    const credentials = getCredentials();
-    const costEntry: AWSCostEntry = await fetchCosts(credentials);
+    const costExplorer = await getCostExplorer(getCredentials());
+    const costEntry: AWSCostEntry = await fetchFn(costExplorer);
     await saveCostEntry(costEntry);
   } catch (error) {
     console.error(error);
@@ -34,16 +48,6 @@ async function handler() {
     };
     await saveCostEntry(errorEntry);
   }
-}
-
-function getCredentials() {
-  const accessKeyId = functions.config()[awsCostConfig.configServiceKey][
-    awsCostConfig.configKeys.accessKeyId
-  ];
-  const secretAccessKey = functions.config()[awsCostConfig.configServiceKey][
-    awsCostConfig.configKeys.secretAccessKey
-  ];
-  return { accessKeyId, secretAccessKey };
 }
 
 async function saveCostEntry(costEntry: Partial<AWSCostEntry>) {

@@ -1,15 +1,23 @@
-export interface AWSCostEntry {
+export interface AWSCostEntryBase {
   timestampMs: number;
+  currency: 'USD';
+  error?: string;
+}
+
+export interface AWSCostEntryMonthToDate extends AWSCostEntryBase {
+  type: 'month_to_date';
   monthToDate: {
     startISODate: string;
     endISODate: string;
     blendedCost: number;
-    unblendedCost: number;
   };
+}
+
+export interface AWSCostEntryToday extends AWSCostEntryBase {
+  type: 'today';
   today: {
     blendedCost: number;
-    unblendedCost: number;
   };
-  currency: 'USD';
-  error?: string;
 }
+
+export type AWSCostEntry = AWSCostEntryMonthToDate | AWSCostEntryToday;
