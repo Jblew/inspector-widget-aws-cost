@@ -1,11 +1,11 @@
-import { FIRESTORE_COLLECTIONS } from '../../config';
+const baseCollection = 'collected_data';
 
 export const awsCostConfig = {
   checkSchedule: {
     monthToDate: 'every 24 hours',
     today: 'every 4 hours',
   },
-  firestoreCollection: `${FIRESTORE_COLLECTIONS.collected_data}/awsCost/data`,
+  firestoreCollection: `${baseCollection}/awsCost/data`,
   requiredUnitForCost: 'USD',
   configServiceKey: 'aws_cost',
   configKeys: {
