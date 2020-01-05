@@ -2,9 +2,12 @@
   "name": "aws-cost-functions",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/aws-cost-functions/src/index.js",
   "scripts": {
     "build": "tsc"
+  },
+  "engines": {
+    "node": "8"
   },
   "author": "",
   "license": "ISC",

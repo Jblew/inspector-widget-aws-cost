@@ -1,0 +1,6 @@
+{
+  "functions": {
+    "predeploy": ["npm --prefix \"aws-cost-functions\" run build"],
+    "source": "aws-cost-functions"
+  }
+}
