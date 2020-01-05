@@ -1,0 +1,15 @@
+dist: xenial
+language: node_js
+
+before_install:
+  - npm i -g npm
+  - npm i -g firebase firebase-tools
+
+install:
+  - npm --prefix="aws-cost-functions" ci
+
+script:
+  - |
+    if [[ $TRAVIS_BRANCH =~ ^(master)$ ]]; then
+      firebase deploy --token "$FIREBASE_TOKEN" --only functions:aws_cost
+    fi
