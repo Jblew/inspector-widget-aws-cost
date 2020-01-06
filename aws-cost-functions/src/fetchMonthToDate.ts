@@ -34,16 +34,11 @@ async function fetchMonthToDate(costExplorer: AWS.CostExplorer) {
   const timePeriod = resp.ResultsByTime![0].TimePeriod;
   const total = resp.ResultsByTime![0].Total!;
 
-  ow(timePeriod?.Start, 'fetchToday().timePeriod.Start', ow.string.equals(Start));
-  ow(timePeriod?.End, 'fetchToday().timePeriod.Etart', ow.string.equals(End));
+  ow(timePeriod?.Start, 'fetchMonthToDate().timePeriod.Start', ow.string.equals(Start));
+  ow(timePeriod?.End, 'fetchMonthToDate().timePeriod.Etart', ow.string.equals(End));
   ow(
     total.BlendedCost.Unit,
     'fetchToday().timePeriod.BlendedCost.Unit',
-    ow.string.equals(requiredCurrency),
-  );
-  ow(
-    total.UnblendedCost.Unit,
-    'fetchToday().timePeriod.UnblendedCost.Unit',
     ow.string.equals(requiredCurrency),
   );
 
@@ -51,7 +46,6 @@ async function fetchMonthToDate(costExplorer: AWS.CostExplorer) {
     startISODate: timePeriod!.Start!,
     endISODate: timePeriod!.End,
     blendedCost: Number(total.BlendedCost.Amount),
-    unblendedCost: Number(total.UnblendedCost.Amount),
   };
 }
 

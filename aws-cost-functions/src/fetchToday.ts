@@ -41,15 +41,9 @@ async function fetchToday(costExplorer: AWS.CostExplorer) {
     'fetchToday().timePeriod.BlendedCost.Unit',
     ow.string.equals(requiredCurrency),
   );
-  ow(
-    total.UnblendedCost.Unit,
-    'fetchToday().timePeriod.UnblendedCost.Unit',
-    ow.string.equals(requiredCurrency),
-  );
 
   return {
     blendedCost: Number(total.BlendedCost.Amount),
-    unblendedCost: Number(total.UnblendedCost.Amount),
   };
 }
 
