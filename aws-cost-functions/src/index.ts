@@ -33,7 +33,7 @@ const aws_cost_check_today = functions
   .pubsub.schedule(awsCostConfig.checkSchedule.today)
   .onRun(async () => {
     try {
-      await handler(firestore, awsCostConfig.firestoreCollections.monthToDate, fetchTodayCosts);
+      await handler(firestore, awsCostConfig.firestoreCollections.daily, fetchTodayCosts);
     } catch (err) {
       console.error(err);
       throw err;
