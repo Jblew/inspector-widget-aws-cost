@@ -1,6 +1,6 @@
 <template>
   <stateful-resource :resource="costResource">
-    <CostBarChart :entries="entries" title="AWS Cost Month-to-date [USD]" color="#511C29" />
+    <CostBarChart :entries="entries" title="AWS Cost Month-to-date [USD]" color="#f48fb1" />
   </stateful-resource>
 </template>
 
