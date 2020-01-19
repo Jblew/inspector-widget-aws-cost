@@ -18,5 +18,5 @@ function processDocuments(docs: firebase.firestore.QueryDocumentSnapshot[]) {
 }
 
 function getCollection() {
-  return firebase.firestore().collection(awsCostConfig.firestoreCollections.monthToDate);
+  return firebase.firestore().collection(awsCostConfig.firestoreCollections.daily);
 }

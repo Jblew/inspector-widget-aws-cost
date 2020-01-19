@@ -1,10 +1,10 @@
 <template>
   <stateful-resource :resource="costResource">
     <CostBarChart
-      id="aws-cost-month-to-date"
+      id="aws-cost-daily"
       :entries="entries"
-      title="AWS Cost Month-to-date [USD]"
-      color="#511C29"
+      title="AWS Cost daily [USD]"
+      color="#56494E"
     />
   </stateful-resource>
 </template>
@@ -14,37 +14,38 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { StatefulResource, Resource } from 'vue-stateful-resource';
 import firebase from 'firebase/app';
 import { awsCostConfig } from '../aws-cost-config';
-import { AWSCostEntryMonthToDate } from '../AWSCostEntry';
-import { listenForMonthToDate } from './listenForMonthToDate';
+import { AWSCostEntryToday } from '../AWSCostEntry';
+import { listenForDaily } from './listenForDaily';
 import CostBarChart from './CostBarChart.vue';
 
 @Component({
   components: { StatefulResource, CostBarChart },
 })
-export default class AWSCostMonthToDate extends Vue {
-  costResource: Resource<AWSCostEntryMonthToDate[]> = Resource.empty();
+export default class AWSCostDaily extends Vue {
+  costResource: Resource<AWSCostEntryToday[]> = Resource.empty();
 
   get entries(): [string, number][] {
-    const raw: AWSCostEntryMonthToDate[] = [...(this.costResource.result || [])];
+    const raw: AWSCostEntryToday[] = [...(this.costResource.result || [])];
+    console.log(raw);
     return raw
       .sort((a, b) => a.timestampMs - b.timestampMs)
-      .map(e => [entryLabel(e), e.monthToDate.blendedCost]);
+      .map(e => [entryLabel(e), e.today.blendedCost]);
   }
 
   beforeMount() {
-    listenForMonthToDate(res => {
+    listenForDaily(res => {
       this.costResource = res;
     });
   }
 }
-function entryLabel(entry: AWSCostEntryMonthToDate) {
+function entryLabel(entry: AWSCostEntryToday) {
   const date = new Date(entry.timestampMs);
-  return date.toISOString().substring(0, 10);
+  return date.toTimeString();
 }
 </script>
 
 <style>
-#aws-cost-month-to-date {
+#aws-cost-daily {
   max-height: 15rem;
 }
 </style>
