@@ -2,9 +2,10 @@
   <div id="aws-cost-month-to-date">
     <h1>Aws cost</h1>
     <stateful-resource :resource="costResource">
-      <div v-for="(elem, index) in costResource.result" :key="index">
+      <div v-for="(elem, index) in entries" :key="index">
         {{ JSON.stringify(elem) }}
       </div>
+      <span>Total {{ entries.length }}</span>
     </stateful-resource>
   </div>
 </template>
@@ -14,41 +15,23 @@ import { Component, Vue } from 'vue-property-decorator';
 import { StatefulResource, Resource } from 'vue-stateful-resource';
 import firebase from 'firebase/app';
 import { awsCostConfig } from '../aws-cost-config';
-import { AWSCostEntry } from '../AWSCostEntry';
-
-function getCol() {
-  console.log(`Col=${awsCostConfig.firestoreCollection}`);
-  return firebase.firestore().collection(awsCostConfig.firestoreCollection);
-}
-
-async function getData() {
-  const qs = await getCol()
-    .limit(100)
-    .orderBy('timestampMs', 'desc')
-    .where('type', '==', 'month_to_date')
-    .get();
-  return qs.docs.map(doc => doc.data() as AWSCostEntry);
-}
+import { AWSCostEntryMonthToDate } from '../AWSCostEntry';
+import { listenForMonthToDate } from './listenForMonthToDate';
 
 @Component({
   components: { StatefulResource },
 })
 export default class AWSCostMonthToDate extends Vue {
-  costResource: Resource<AWSCostEntry[]> = Resource.empty();
+  costResource: Resource<AWSCostEntryMonthToDate[]> = Resource.empty();
 
-  get entries(): AWSCostEntry[] {
+  get entries(): AWSCostEntryMonthToDate[] {
     return this.costResource.result || [];
   }
 
   beforeMount() {
-    Resource.fetchResource(
-      'aws-cost-month-to-date',
-      () => getData(),
-      costResource => {
-        this.costResource = costResource;
-        console.log(costResource);
-      },
-    );
+    listenForMonthToDate(res => {
+      this.costResource = res;
+    });
   }
 }
 </script>
