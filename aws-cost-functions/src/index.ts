@@ -1,4 +1,4 @@
-// tslint:disable no-console
+/* eslint-disable */
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
@@ -17,7 +17,11 @@ const aws_cost_check_month_to_date = functions
   .pubsub.schedule(awsCostConfig.checkSchedule.monthToDate)
   .onRun(async () => {
     try {
-      await handler(firestore, fetchMonthToDateCosts);
+      await handler(
+        firestore,
+        awsCostConfig.firestoreCollections.monthToDate,
+        fetchMonthToDateCosts,
+      );
     } catch (err) {
       console.error(err);
       throw err;
@@ -29,7 +33,7 @@ const aws_cost_check_today = functions
   .pubsub.schedule(awsCostConfig.checkSchedule.today)
   .onRun(async () => {
     try {
-      await handler(firestore, fetchTodayCosts);
+      await handler(firestore, awsCostConfig.firestoreCollections.monthToDate, fetchTodayCosts);
     } catch (err) {
       console.error(err);
       throw err;
