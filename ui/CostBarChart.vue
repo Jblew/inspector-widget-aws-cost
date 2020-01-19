@@ -33,7 +33,12 @@ export default class CostBarChart extends Mixins(Bar) {
       datasets: [dataset],
     };
 
-    const options: ChartOptions = { maintainAspectRatio: false };
+    const options: ChartOptions = {
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [{ ticks: { beginAtZero: true } }],
+      },
+    };
     this.renderChart(data, options);
   }
 }

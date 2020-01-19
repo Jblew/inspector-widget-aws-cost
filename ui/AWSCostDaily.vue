@@ -1,11 +1,6 @@
 <template>
   <stateful-resource :resource="costResource">
-    <CostBarChart
-      id="aws-cost-daily"
-      :entries="entries"
-      title="AWS Cost daily [USD]"
-      color="#56494E"
-    />
+    <CostBarChart :entries="entries" title="AWS Cost daily [USD]" color="#56494E" />
   </stateful-resource>
 </template>
 
@@ -40,12 +35,6 @@ export default class AWSCostDaily extends Vue {
 }
 function entryLabel(entry: AWSCostEntryToday) {
   const date = new Date(entry.timestampMs);
-  return date.toTimeString();
+  return date.toTimeString().substring(0, 12);
 }
 </script>
-
-<style>
-#aws-cost-daily {
-  max-height: 15rem;
-}
-</style>

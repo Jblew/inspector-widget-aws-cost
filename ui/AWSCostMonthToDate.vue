@@ -1,11 +1,6 @@
 <template>
   <stateful-resource :resource="costResource">
-    <CostBarChart
-      id="aws-cost-month-to-date"
-      :entries="entries"
-      title="AWS Cost Month-to-date [USD]"
-      color="#511C29"
-    />
+    <CostBarChart :entries="entries" title="AWS Cost Month-to-date [USD]" color="#511C29" />
   </stateful-resource>
 </template>
 
@@ -42,9 +37,3 @@ function entryLabel(entry: AWSCostEntryMonthToDate) {
   return date.toISOString().substring(0, 10);
 }
 </script>
-
-<style>
-#aws-cost-month-to-date {
-  max-height: 15rem;
-}
-</style>
