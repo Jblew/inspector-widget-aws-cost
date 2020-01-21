@@ -5,15 +5,23 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:lib": "vue-cli-service build --target lib --inline-vue --name aws-cost-widget-ui src/index.ts",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "chart.js": "^2.9.3",
+    "firebase": "^7.6.1",
+    "vue-chartjs": "^3.5.0",
+    "vue-stateful-resource": "^1.1.2",
     "core-js": "^3.4.4",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.3.0"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.10",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "@types/vue": "^2.0.0",
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
     "@vue/cli-plugin-typescript": "^4.1.0",
