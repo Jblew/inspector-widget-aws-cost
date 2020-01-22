@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:lib": "vue-cli-service build --target lib --inline-vue --name aws-cost src/index.ts",
+    "build:lib": "vue-cli-service build --target lib --name aws-cost src/index.ts",
     "lint": "vue-cli-service lint"
   },
   "main": "/dist/aws-cost-widget-ui.common.js",
