@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:lib": "vue-cli-service build --target lib --name aws-cost src/index.ts",
+    "build": "npm run build:clean && npm run build:AWSCostDaily && npm run build:AWSCostMonthToDate",
+    "build:clean": "rm -rf dist",
+    "build:AWSCostDaily": "vue-cli-service build --target lib --formats umd-min --no-clean --dest dist/AWSCostDaily --name \"AWSCostDaily.[chunkhash]\" src/components/AWSCostDaily.vue",
+    "build:AWSCostMonthToDate": "vue-cli-service build --target lib --formats umd-min --no-clean --dest dist/AWSCostMonthToDate --name \"AWSCostMonthToDate.[chunkhash]\" src/components/AWSCostMonthToDate.vue",
     "lint": "vue-cli-service lint"
   },
   "main": "/dist/aws-cost-widget-ui.common.js",
