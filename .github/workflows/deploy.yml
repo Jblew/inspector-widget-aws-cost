@@ -1,0 +1,30 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-n-deploy:
+    name: Deploy firebase functions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm --prefix=./aws-cost-functions ci
+      - run: npm --prefix=./aws-cost-ui ci
+      - run: npm --prefix=./aws-cost-functions run build
+      - run: npm --prefix=./aws-cost-ui run build:lib
+      - run: npm i -g firebase-tools
+      - run: firebase deploy --only functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - name: GitHub Pages Deploy
+        uses: maxheld83/ghpages@v0.2.1
+        env: BUILD_DIR = "aws-cost-ui/dist/"
+        secrets:
+          - GH_PAT
