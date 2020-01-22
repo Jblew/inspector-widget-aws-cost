@@ -19,8 +19,8 @@ jobs:
       - run: npm --prefix=./aws-cost-ui ci
       - run: npm --prefix=./aws-cost-functions run build
       - run: npm --prefix=./aws-cost-ui run build:lib
-      - run: echo "inspector-widget-aws-cost-ui component > aws-cost-ui/dist/index.html"
-      - run: npm i -g firebase-tools && firebase deploy --only functions
+      - run: echo "inspector-widget-aws-cost-ui component" > aws-cost-ui/dist/index.html
+      - run: npm i -g firebase-tools && firebase deploy --token $FIREBASE_TOKEN --only functions
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: GitHub Pages Deploy
