@@ -21,6 +21,7 @@ export default class AWSCostDaily extends Vue {
 
   get entries(): [string, number][] {
     const raw: AWSCostEntryToday[] = [...(this.costResource.result || [])];
+    /* eslint-disable */
     console.log(raw);
     return raw
       .sort((a, b) => a.timestampMs - b.timestampMs)
