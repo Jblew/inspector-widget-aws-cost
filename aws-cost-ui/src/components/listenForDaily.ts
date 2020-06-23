@@ -1,7 +1,7 @@
 import { Resource } from 'vue-stateful-resource';
 import firebase from 'firebase/app';
-import { AWSCostEntryToday } from '@AWSCostEntry';
-import { awsCostConfig } from '@aws-cost-config';
+import { AWSCostEntryToday } from '../../../AWSCostEntry';
+import { awsCostConfig } from '../../../aws-cost-config';
 import { listenForSnapshots } from './listenForSnapshots';
 
 export const listenForDaily = (cb: (res: Resource<AWSCostEntryToday[]>) => void) =>
