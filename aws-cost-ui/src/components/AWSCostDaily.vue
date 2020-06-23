@@ -8,8 +8,8 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { StatefulResource, Resource } from 'vue-stateful-resource';
 import firebase from 'firebase/app';
-import { awsCostConfig } from '@aws-cost-config';
-import { AWSCostEntryToday } from '@AWSCostEntry';
+import { awsCostConfig } from '../../../aws-cost-config';
+import { AWSCostEntryToday } from '../../../AWSCostEntry';
 import { listenForDaily } from './listenForDaily';
 import CostBarChart from './CostBarChart.vue';
 
