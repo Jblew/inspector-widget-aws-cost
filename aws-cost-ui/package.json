@@ -12,7 +12,7 @@
   },
   "main": "/dist/aws-cost-widget-ui.common.js",
   "dependencies": {
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "firebase": "^7.6.1",
     "vue-chartjs": "^3.5.0",
     "vue-stateful-resource": "^1.1.2",
